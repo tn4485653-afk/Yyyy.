@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết sản phẩm | TechPro</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .product-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-top: 50px; }
+        .main-img { width: 100%; border-radius: 15px; border: 1px solid #ddd; transition: 0.3s; cursor: zoom-in; }
+        .main-img:hover { transform: scale(1.02); }
+        .spec-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .spec-table td { padding: 12px; border-bottom: 1px solid #eee; }
+        .spec-name { font-weight: bold; color: var(--text-muted); width: 150px; }
+        .buy-box { background: #f8fafc; padding: 25px; border-radius: 12px; margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="product-detail-grid">
+            <div class="product-gallery">
+                <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7" class="main-img" id="product-img">
+            </div>
+            <div class="product-info-detail">
+                <h1 id="product-name">PC Gaming TechPro Ultra</h1>
+                <p class="rating"><i class="fas fa-star"></i> 5.0 | 24 đánh giá</p>
+                <h2 class="price" style="font-size: 32px; margin: 20px 0;">85.900.000đ</h2>
+                
+                <h3>Thông số kỹ thuật:</h3>
+                <table class="spec-table">
+                    <tr><td class="spec-name">CPU</td><td>Intel Core i9 14900K</td></tr>
+                    <tr><td class="spec-name">VGA</td><td>NVIDIA RTX 4090 24GB</td></tr>
+                    <tr><td class="spec-name">RAM</td><td>64GB DDR5 6000MHz</td></tr>
+                    <tr><td class="spec-name">SSD</td><td>2TB Gen 5 NVMe</td></tr>
+                </table>
+
+                <div class="buy-box">
+                    <p style="margin-bottom: 15px;"><i class="fas fa-check-circle text-primary"></i> Còn hàng - Giao nhanh 2h</p>
+                    <button class="btn-primary" style="width: 100%; padding: 20px;">MUA NGAY - TRẢ GÓP 0%</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
