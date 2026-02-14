@@ -86,3 +86,114 @@ window.onload = () => {
     const display = document.querySelector('#timer');
     startTimer(fiveHours, display);
 };
+// ==========================================
+// HỆ THỐNG ĐĂNG NHẬP / ĐĂNG KÝ
+// ==========================================
+
+const userBtn = document.querySelector('.action-item'); // Nút Tài khoản trên Header
+const authModal = document.getElementById('auth-modal');
+const closeBtn = document.querySelector('.close-btn');
+const authForm = document.getElementById('auth-form');
+let isLoginMode = true;
+
+// Mở form khi bấm vào biểu tượng "Tài khoản"
+userBtn.addEventListener('click', () => {
+    const loggedInUser = localStorage.getItem('techpro_email');
+    if (loggedInUser) {
+        // Nếu đã đăng nhập thì hỏi xem có muốn đăng xuất không
+        if (confirm(`Bạn đang đăng nhập bằng: ${loggedInUser}\nBạn có muốn đăng xuất không?`)) {
+            localStorage.removeItem('techpro_email');
+            checkLoginStatus();
+        }
+    } else {
+        authModal.style.display = 'flex'; // Hiện form
+    }
+});
+
+// Đóng form khi bấm dấu X hoặc bấm ra ngoài
+closeBtn.addEventListener('click', () => authModal.style.display = 'none');
+window.addEventListener('click', (e) => {
+    if (e.target === authModal) authModal.style.display = 'none';
+});
+
+// Chuyển đổi giữa chế độ Đăng ký và Đăng nhập
+function toggleAuthMode() {
+    isLoginMode = !isLoginMode;
+    const title = document.getElementById('modal-title');
+    const submitBtn = document.querySelector('.form-submit');
+    const toggleText = document.querySelector('.toggle-auth');
+
+    if (isLoginMode) {
+        title.innerText = "Đăng nhập";
+        submitBtn.innerText = "Đăng nhập ngay";
+        toggleText.innerHTML = `Chưa có tài khoản? <span id="toggle-form-btn" onclick="toggleAuthMode()">Đăng ký tại đây</span>`;
+    } else {
+        title.innerText = "Đăng ký tài khoản mới";
+        submitBtn.innerText = "Tạo tài khoản";
+        toggleText.innerHTML = `Đã có tài khoản? <span id="toggle-form-btn" onclick="toggleAuthMode()">Đăng nhập</span>`;
+    }
+}
+
+// Xử lý khi ấn nút Submit Form
+authForm.addEventListener('submit', (e) => {
+    e.preventDefault(); // Ngăn trình duyệt load lại trang
+
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    // 1. Kiểm tra Validate cơ bản
+    if (!email.includes('@gmail.com') && !email.includes('@')) {
+        alert("Vui lòng nhập đúng định dạng Email (ví dụ: abc@gmail.com)!");
+        return;
+    }
+    if (password.length < 6) {
+        alert("Bảo mật yếu: Mật khẩu phải có ít nhất 6 ký tự!");
+        return;
+    }
+
+    // 2. Tạo hiệu ứng loading giả lập gửi dữ liệu lên Server
+    const submitBtn = document.querySelector('.form-submit');
+    const originalText = submitBtn.innerText;
+    submitBtn.innerText = "Đang kết nối hệ thống...";
+    submitBtn.style.opacity = "0.7";
+
+    setTimeout(() => {
+        // 3. Xử lý thành công sau 1 giây
+        localStorage.setItem('techpro_email', email); // Lưu vào bộ nhớ cục bộ
+        alert(`${isLoginMode ? 'Đăng nhập' : 'Đăng ký'} thành công!\nChào mừng ${email} đến với TechPro.`);
+        
+        // Reset giao diện form
+        authModal.style.display = 'none';
+        submitBtn.innerText = originalText;
+        submitBtn.style.opacity = "1";
+        authForm.reset();
+        
+        // Cập nhật tên lên Header
+        checkLoginStatus();
+    }, 1500); // Đợi 1.5s
+});
+
+// Hàm kiểm tra trạng thái đăng nhập (chạy khi vừa load trang)
+function checkLoginStatus() {
+    const loggedInUser = localStorage.getItem('techpro_email');
+    // Lấy thẻ <span> chứa chữ "Tài khoản" (thẻ span thứ 2 trong .action-item đầu tiên)
+    const userTextSpan = document.querySelectorAll('.action-item span')[0]; 
+    
+    if (loggedInUser) {
+        // Cắt lấy chữ đằng trước @gmail.com
+        const username = loggedInUser.split('@')[0];
+        userTextSpan.innerText = `Chào, ${username}`;
+        userTextSpan.style.color = "var(--primary-color)";
+        userTextSpan.style.fontWeight = "bold";
+    } else {
+        userTextSpan.innerText = "Tài khoản";
+        userTextSpan.style.color = "inherit";
+        userTextSpan.style.fontWeight = "normal";
+    }
+}
+
+// Kích hoạt check khi web vừa mở lên
+document.addEventListener('DOMContentLoaded', () => {
+    checkLoginStatus();
+});
+
