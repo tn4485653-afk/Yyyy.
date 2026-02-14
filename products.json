@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "PC Gaming TechPro Ultra - i9 14900K | RTX 4090",
+    "price": 85900000,
+    "specs": ["Core i9 14900K", "RTX 4090 24GB", "64GB DDR5", "2TB NVMe Gen5"],
+    "description": "Siêu phẩm máy tính mạnh nhất thế giới hiện nay, phục vụ mọi nhu cầu đồ họa và gaming 4K.",
+    "img": "https://images.unsplash.com/photo-1587202372775-e229f172b9d7"
+  },
+  {
+    "id": 2,
+    "name": "Laptop ASUS ROG Strix G16 (2024)",
+    "price": 35990000,
+    "specs": ["Core i7 13650HX", "RTX 4060", "16GB RAM", "165Hz Display"],
+    "description": "Dòng laptop gaming quốc dân với hiệu năng cực đỉnh trong tầm giá.",
+    "img": "https://images.unsplash.com/photo-1603302576837-37561b2e2302"
+  }
+]
